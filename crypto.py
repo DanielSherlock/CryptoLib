@@ -7,28 +7,28 @@ text = "anyone can see... this"
 alpha = "abcdefghijklmnopqrstuvwxyz"
 TEXT = "CIPHERTEXT IS AN EXAMPLE OF A CIPHER"
 ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-preserveSpaces = True
+preserve_spaces = True
 
 
 #------Setting functions------#
 
-def cryptDirection(direction):
+def crypt_direction(direction):
     global encrypt
     if direction.lower() == "decrypt" or not direction:
         encrypt = False
     else:
         encrypt = True
 
-def setCiphertext(NEW):
-    global TEXT, preserveSpaces
+def set_TEXT(NEW):
+    global TEXT, preserve_spaces
     TEXT = NEW.upper()
-    if not preserveSpaces:
+    if not preserve_spaces:
         TEXT = TEXT.replace(" ","")
 
 
 #------Analytic functions------#
 
-def cribFind(crib):
+def crib_find(crib):
     global TEXT
     crib = crib.lower()
     crib = crib.replace(" ","")
@@ -53,7 +53,7 @@ def cribFind(crib):
         i += 1
     return result
 
-def stringFreq(length = 1, mincount = 1):
+def string_freq(length = 1, mincount = 1):
     global TEXT
     done = []
     result = []
@@ -73,12 +73,11 @@ def stringFreq(length = 1, mincount = 1):
 #------Cryptographic functions------#
 
 def substitute(text, sourceAlpha, targetAlpha):
-    text = TEXT
     for i in range(26):
         text = text.replace(sourceAlpha[i], targetAlpha[i])
     return text
 
-def simpleMonoalphaSub():
+def simple_monoalpha_sub():
     global encrypt, text, alphabet, TEXT, ALPHABET
     if encrypt:
         TEXT = substitute(text, alpha, ALPHA)
