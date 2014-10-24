@@ -8,6 +8,7 @@ text = "anyone can see... this"
 alpha = alphabet.lower()
 Key = "keyword"
 TEXT = "Vvr Fstkh Pqbq cbq llg Jug eseg rvktwkigo kukqu oeu khx aheqbtwv, yyeg i hecjrdit tafm oyqbt ovcgpxl wa c knjq ecots.Hugm nyvgvd mpog vvr grg nhh nweuh fmgevewmr vp ancmpx tam hecjrdit kadm vvu qygem ffy avbwzq ti efnlqrrtsq kxtfnzmf gjoa llg ftamf.Gjsa llg Eokbv Jkbq tpgn al poef of zi efuel, phv huw qqie am pygk gzi ofrx kzbusyq hku tam hecjrdit woel vvu qygem rrhcbq jwz;srf rt eigg vvr Fstkh Pqbq ioiw yr khx ihggacl. Xjvn mps Fwb fzmpvd hch jcfzdc, ced buarfwnlinp tam hecjrdit kohs csh vvk gnfad.Ibq uc gzi Pfrmp Kvpr jsw qslbosq vc pgrhvsl bvnv huw Wwe wta hug ggjspxek wt gjs gos.vyil qg n xwtfitv".upper()#"CIPHERTEXT IS AN EXAMPLE OF A CIPHER"
+#TEXT = "CIPHERTEXT IS AN EXAMPLE OF A CIPHER"
 ALPHA = alphabet.upper()
 
 encrypt = True
@@ -21,46 +22,46 @@ key_empty_c = " "
 
 #------Setting functions------#
 
-def _set_crypt_dir(direction):
+def set_crypt_dir(direction):
     global encrypt
     if direction.lower() == "decrypt" or not direction:
         encrypt = False
     else:
         encrypt = True
 
-def _set_canon_alpha(canon):
+def set_canon_alpha(canon):
     global canon_alpha
     if canon == "ALPHA" or canon.lower() == "decrypt" or not canon:
         canon_alpha = False
     else:
         canon_alpha = True
 
-def _process_remove(string, taboo = remove, key = False):
+def process_remove(string, taboo = remove, key = False):
     for c in taboo:
         if not key or not c == key_empty_c:
             string = string.replace(c, "")
     return string
 
-def _set_text(new):
+def set_text(new):
     global text
     text = new.lower()
-    text = _process_remove(text)
+    text = process_remove(text)
 
-def _set_TEXT(NEW):
+def set_TEXT(NEW):
     global TEXT
     TEXT = NEW.upper()
-    TEXT = _process_remove(TEXT)
+    TEXT = process_remove(TEXT)
 
 
 #------Analytic functions------#
 
-def _ignore_in(string):
+def ignore_in(string):
     for x in ignore:
         if x in string:
             return True
     return False
 
-def _sort_by_canon():
+def sort_by_canon():
     global alpha, ALPHA, canon_alpha
     if canon_alpha:
         a = 0
@@ -77,10 +78,10 @@ def _sort_by_canon():
         alpha += holder[i][0]
         ALPHA += holder[i][1]
 
-def _crib_find(crib):
+def crib_find(crib):
     global TEXT
     crib = crib.lower()
-    crib = _process_remove(crib, strict)
+    crib = process_remove(crib, strict)
     result = []
     i = 0
     while i <= len(TEXT) - len(crib):
@@ -102,14 +103,13 @@ def _crib_find(crib):
         i += 1
     return result
 
-def _string_freq(length = 1, mincount = 1):
-    global TEXT
+def string_freq(length = 1, mincount = 1, TEXT = TEXT):
     done = []
     result = []
     i = 0
     while i <= len(TEXT) - length:
         sub = TEXT[i:i + length]
-        if not sub in done and not _ignore_in(sub):
+        if not sub in done and not ignore_in(sub):
             if TEXT.count(sub) >= mincount:
                 result.append([sub, TEXT.count(sub)])
             done.append(sub)
@@ -118,13 +118,13 @@ def _string_freq(length = 1, mincount = 1):
     result.sort(key=lambda seq: seq[1], reverse=True)
     return result
 
-def _find_repeat_factors():
+def find_repeat_factors():
     global TEXT
-    HOLDER = _process_remove(TEXT, strict)
+    HOLDER = process_remove(TEXT, strict)
     diff_accu = []
     minlength = 3
-    while _string_freq(minlength, 2):
-        for i in _string_freq(minlength, 2):
+    while string_freq(minlength, 2):
+        for i in string_freq(minlength, 2):
             pos_accu = []
             k = 0
             for j in range(i[1]):
@@ -157,7 +157,7 @@ def _find_repeat_factors():
 
 #------Cryptographic functions------#
 
-def _get_v_columns(string, columns):
+def get_v_columns(string, columns):
     result = []
     for number in range(columns):
         count = number
@@ -168,7 +168,7 @@ def _get_v_columns(string, columns):
         result.append(column)
     return result
 
-def _get_h_columns(string, columns):
+def get_h_columns(string, columns):
     result = []
     count = 0
     while count < len(string):
@@ -176,32 +176,32 @@ def _get_h_columns(string, columns):
         count += columns
     return result
 
-def _substitute(text, sourceAlpha, targetAlpha):
+def substitute(text, sourceAlpha, targetAlpha):
     for i in range(len(sourceAlpha)):
         text = text.replace(sourceAlpha[i], targetAlpha[i])
     return text
 
-def _generate_caesar(shift, ALPHA = alphabet.upper()):
+def generate_caesar(shift, ALPHA = alphabet.upper()):
     SHIFTED = ""
     for i in range(len(ALPHA)):
         SHIFTED += ALPHA[(i + shift) % len(ALPHA)]
     return SHIFTED
 
-def _set_caesar(shift):
+def set_caesar(shift):
     global ALPHA
-    ALPHA = _generate_caesar(shift)
+    ALPHA = generate_caesar(shift)
 
-def _set_atbash(shift = 0):
+def set_atbash(shift = 0):
     global ALPHA
-    HOLDER = _generate_caesar(shift)
+    HOLDER = generate_caesar(shift)
     ALPHA = ""
     for i in range(len(HOLDER)):
         ALPHA += HOLDER[len(HOLDER) - (i + 1)]
 
-def _set_keyword_cipher(KEY = Key, ORIG = alphabet.upper()):
+def set_keyword_cipher(KEY = Key, ORIG = alphabet.upper()):
     global ALPHA
     KEY = KEY.upper()
-    KEY = _process_remove(KEY, strict)
+    KEY = process_remove(KEY, strict)
     ALPHA = KEY + ORIG
     i = 0
     while i < len(ALPHA):
@@ -210,24 +210,24 @@ def _set_keyword_cipher(KEY = Key, ORIG = alphabet.upper()):
         else:
             i += 1
 
-def _set_mono_ALPHA():
+def set_mono_ALPHA():
     global alpha, ALPHA
     print(alpha)
     ALPHA = input()
 
-def _do_mono_mono_sub():
+def do_mono_mono_sub():
     global encrypt, text, alphabet, TEXT, ALPHABET
     if encrypt:
-        TEXT = _substitute(text, alpha, ALPHA)
+        TEXT = substitute(text, alpha, ALPHA)
     else:
-        text = _substitute(TEXT, ALPHA, alpha)
+        text = substitute(TEXT, ALPHA, alpha)
 
-def _keyw_mono_poly_sub(a, direction, keyword = Key):
+def keyw_mono_poly_sub(a, direction, keyword = Key):
     KEY = []
-    keyword = _process_remove(keyword, strict, True)
+    keyword = process_remove(keyword, strict, True)
     for c in keyword:
         if not c == key_empty_c:
-            KEY.append(_generate_caesar(alphabet.find(c.lower())))
+            KEY.append(generate_caesar(alphabet.find(c.lower())))
         else:
             KEY.append(alphabet)
     b = ""
@@ -245,19 +245,19 @@ def _keyw_mono_poly_sub(a, direction, keyword = Key):
             b += a[i]
     return b
 
-def _do_vignere(keyword = Key):
+def do_vignere(keyword = Key):
     global text, TEXT
     if encrypt:
-        TEXT = _keyw_mono_poly_sub(text, True, keyword)
+        TEXT = keyw_mono_poly_sub(text, True, keyword)
     else:
-        text = _keyw_mono_poly_sub(TEXT, False, keyword)
+        text = keyw_mono_poly_sub(TEXT, False, keyword)
 
-def _do_beaufort(keyword = Key):
+def do_beaufort(keyword = Key):
     global text, TEXT
     if encrypt:
-        TEXT = _keyw_mono_poly_sub(text, False, keyword).swapcase()
+        TEXT = keyw_mono_poly_sub(text, False, keyword).swapcase()
     else:
-        text = _keyw_mono_poly_sub(TEXT, True, keyword).swapcase()
+        text = keyw_mono_poly_sub(TEXT, True, keyword).swapcase()
 
 
 #------End-user CLI Functions------#
@@ -267,47 +267,116 @@ def hi():
 Hello, this is a useful crypto library,
 written by Daniel Sherlock, in python!""")
 
-def two_row_num_table(header1, header2, data):
-    while len(header1) < len(header2):
-        header1 += " "
-    while len(header1) > len(header2):
-        header2 += " "
-    maxi = max(map(max, data))
-    width = 1
-    track = maxi / 10
+def show_freq_table(header, colw, data):
+    maxv = 0
+    widv = 0
+    track = maxv = max(data, key=lambda seq: seq[1])[1]
     while track >= 1:
         track /= 10
-        width += 1
-    form = "{0:0>" + str(width) + "}"
-    out = header1 + ":"
-    for col in data:
-        out += " | " + form.format(str(col[0]))
-    out += "\n" + header2 + ":"
-    for col in data:
-        out += " | " + form.format(str(col[1]))
+        widv += 1
+    formv = ["{0: >" + str(colw) + "}", "{0: >" + str(widv) + "}"]
+    out = header.title() + ":\n"
+    ratio = (80 - (colw + 3 + widv + 3)) * 2 / maxv
+    for row in data:
+        for i in range(2):
+            out += "| " + formv[i].format(str(row[i])) + " "
+        barlength = round(ratio * row[1])
+        out += "=" * (barlength // 2)
+        out += "-" * (barlength % 2)
+        out += "\n"
     print(out)
 
+def show_num_freq_table(header, data):
+    track = max(data, key=lambda seq: seq[0])[0]
+    widv = 0
+    while track >= 1:
+        track /= 10
+        widv += 1
+    show_freq_table(header, widv, data)
+
+##def two_row_num_table(header1, header2, data):
+##    while len(header1) < len(header2):
+##        header1 += " "
+##    while len(header1) > len(header2):
+##        header2 += " "
+##    maxi = max(map(max, data))
+##    width = 1
+##    track = maxi / 10
+##    while track >= 1:
+##        track /= 10
+##        width += 1
+##    form = "{0:0>" + str(width) + "}"
+##    out = header1 + ":"
+##    for col in data:
+##        out += " | " + form.format(str(col[0]))
+##    out += "\n" + header2 + ":"
+##    for col in data:
+##        out += " | " + form.format(str(col[1]))
+##    print(out)
+
 def show_repeat_factors():
-    two_row_num_table("FACTORS", "REPEATS", _find_repeat_factors())
+    show_num_freq_table("repeating factor frequencies", find_repeat_factors())
+
+def show_freq_analysis(TEXT = TEXT):
+    analysis = string_freq(TEXT = TEXT)
+    analysis.sort(key=lambda seq: seq[0])
+    show_freq_table("single-letter frequency analysis", 1, analysis)
+
+def analyse_vignere_key_letter(key_length):
+    global Key, TEXT
+    number = (int(input("""
+Which letter of the key would you like to analyse and guess?
+Key letter number:
+  => """)) - 1) % key_length
+    print("")
+    show_freq_analysis(get_v_columns(process_remove(TEXT, ignore), key_length)[number])
+    Key = Key[:number] + input("""
+Based on the frequencey analysis of this subsection of the cipher above,
+what letter of the alphabet do you think it is?
+(Hint: Which letter of this ciphertext section would code to 'a'?)
+  => """) + Key[number + 1:]
+
+def guess_vignere_key():
+    print("nothing here yet")
 
 def solve_vignere():
     global encrypt, Key
     encrypt = False
-    print("""
-Choose a key length based on a common
-factor of repeated sequence offset,
-as calculated below:""")
     show_repeat_factors()
-    key_length = int(input("Suspected key length: "))
+    print("""Choose a key length based on a common factor of
+repeated sequence offset, as calculated above.""")
+    key_length = int(input("""Suspected key length:
+  => """))
     Key = " " * key_length
     done = False
-    _do_vignere(Key)
-    print(text)
-    while not done:
-        number = (int(input("Which letter of the key would you like to try? ")) - 1) % key_length
-        Key = Key[:number] + input("What do you think it is? ") + Key[number + 1:]
-        _do_vignere(Key)
-        print(text)
-        if input("Are you done? [Y/N]: ").lower() == "y":
+    understood = True
+    while not done or not understood:
+        print("")
+        if understood:
+            do_vignere(Key)
+            print("Current key: -" + Key + "-\nCurrent message:\n" + text)
+        else:
+            print("Sorry, did not understand, please try again.")
+        option = input("""
+Do you want to:
+ [1]: Analyse and guess a single letter of the key?
+ [2]: Guess a larger part of the key?
+ [3]: Finish?
+ [4]: Restart?
+  => """)
+        if option == "1":
+            understood = True
+            analyse_vignere_key_letter(key_length)
+        elif option == "2":
+            understood = True
+            guess_vignere_key()
+        elif option == "3":
+            understood = True
             done = True
+        elif option == "4":
+            solve_vignere()
+            understood = True
+            done = True
+        else:
+            understood = False
             
