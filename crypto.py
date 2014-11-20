@@ -7,8 +7,7 @@ alphabet = "abcdefghijklmnopqrstuvwxyz"
 text = "anyone can see... this"
 alpha = alphabet.lower()
 Key = "keyword"
-TEXT = "Vvr Fstkh Pqbq cbq llg Jug eseg rvktwkigo kukqu oeu khx aheqbtwv, yyeg i hecjrdit tafm oyqbt ovcgpxl wa c knjq ecots.Hugm nyvgvd mpog vvr grg nhh nweuh fmgevewmr vp ancmpx tam hecjrdit kadm vvu qygem ffy avbwzq ti efnlqrrtsq kxtfnzmf gjoa llg ftamf.Gjsa llg Eokbv Jkbq tpgn al poef of zi efuel, phv huw qqie am pygk gzi ofrx kzbusyq hku tam hecjrdit woel vvu qygem rrhcbq jwz;srf rt eigg vvr Fstkh Pqbq ioiw yr khx ihggacl. Xjvn mps Fwb fzmpvd hch jcfzdc, ced buarfwnlinp tam hecjrdit kohs csh vvk gnfad.Ibq uc gzi Pfrmp Kvpr jsw qslbosq vc pgrhvsl bvnv huw Wwe wta hug ggjspxek wt gjs gos.vyil qg n xwtfitv".upper()#"CIPHERTEXT IS AN EXAMPLE OF A CIPHER"
-#TEXT = "CIPHERTEXT IS AN EXAMPLE OF A CIPHER"
+TEXT = "CIPHERTEXT IS AN EXAMPLE OF A CIPHER"
 ALPHA = alphabet.upper()
 
 encrypt = True
@@ -170,11 +169,39 @@ def get_v_columns(string, columns):
 
 def get_h_columns(string, columns):
     result = []
+    columns = len(string) // columns
     count = 0
     while count < len(string):
         result.append(string[count:count + columns])
         count += columns
     return result
+
+def do_h_columnar(nKey):
+    global text, TEXT
+    TXT = process_remove(TEXT, strict)
+    keyLen = len(nKey)
+    if encrypt:
+        print("Sorry, that is not yet coded!")
+    else:
+        cols = get_h_columns(TXT, keyLen)
+        text = ""
+        for i in range(len(TXT)):
+            text += cols[nKey[i % keyLen]][i // keyLen]
+
+def x22_x12_mat_mul(x22, x12):
+    return [(x22[0][0] * x12[0] + x22[0][1] * x12[1]) % 26,
+            (x22[1][0] * x12[0] + x22[1][1] * x12[1]) % 26]
+
+def do_hill_2x2():
+    if encrypt:
+        print("Sorry, that is not yet coded!")
+    else:
+        l = []
+        [l.extend(i) for i in
+         [x22_x12_mat_mul(Key, p) for p in
+          get_h_columns([ALPHA.index(c)
+                         for c in TEXT], 2)]]
+        return "".join([alpha[x] for x in l])
 
 def substitute(text, sourceAlpha, targetAlpha):
     for i in range(len(sourceAlpha)):
@@ -379,4 +406,7 @@ Do you want to:
             done = True
         else:
             understood = False
-            
+
+#-------TEMP SET--------#
+
+
