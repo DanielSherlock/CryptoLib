@@ -1,5 +1,7 @@
 #!/usr/local/bin/python3.4
 
+#---------------------Added notes for what has been implemented in new version
+
     #------Variables------#
 
     alphabet = "abcdefghijklmnopqrstuvwxyz"
@@ -21,32 +23,32 @@
 
     #------Setting functions------#
 
-    def set_crypt_dir(direction):
+    def set_crypt_dir(direction):#--------------------------------------unnecessary
         global encrypt
         if direction.lower() == "decrypt" or not direction:
             encrypt = False
         else:
             encrypt = True
 
-    def set_canon_alpha(canon):
+    def set_canon_alpha(canon):#----------------------------------probably not necessary
         global canon_alpha
         if canon == "ALPHA" or canon.lower() == "decrypt" or not canon:
             canon_alpha = False
         else:
             canon_alpha = True
 
-    def process_remove(string, taboo = remove, key = False):
+    def process_remove(string, taboo = remove, key = False):#---------TODO
         for c in taboo:
             if not key or not c == key_empty_c:
                 string = string.replace(c, "")
         return string
 
-    def set_text(new):
+    def set_text(new):#----------------------------------------probably not necessary
         global text
         text = new.lower()
         text = process_remove(text)
 
-    def set_TEXT(NEW):
+    def set_TEXT(NEW):#------------------------------------------probably not necessary
         global TEXT
         TEXT = NEW.upper()
         TEXT = process_remove(TEXT)
@@ -54,13 +56,13 @@
 
     #------Analytic functions------#
 
-    def ignore_in(string):
+    def ignore_in(string):#-------------------------------------done
         for x in ignore:
             if x in string:
                 return True
         return False
 
-    def sort_by_canon():
+    def sort_by_canon():#-------------------------------------------TODO
         global alpha, ALPHA, canon_alpha
         if canon_alpha:
             a = 0
@@ -77,7 +79,7 @@
             alpha += holder[i][0]
             ALPHA += holder[i][1]
 
-    def crib_find(crib):
+    def crib_find(crib):#------------------------------------------done
         global TEXT
         crib = crib.lower()
         crib = process_remove(crib, strict)
@@ -102,7 +104,7 @@
             i += 1
         return result
 
-    def string_freq(length = 1, mincount = 1, TEXT = TEXT):
+    def string_freq(length = 1, mincount = 1, TEXT = TEXT):#------------done
         done = []
         result = []
         i = 0
@@ -117,7 +119,7 @@
         result.sort(key=lambda seq: seq[1], reverse=True)
         return result
 
-    def find_repeat_factors():
+    def find_repeat_factors():#----------------------------------done
         global TEXT
         HOLDER = process_remove(TEXT, strict)
         diff_accu = []
@@ -156,7 +158,7 @@
 
     #------Cryptographic functions------#
 
-    def get_v_columns(string, columns):
+    def get_v_columns(string, columns):#-------------------------done
         result = []
         for number in range(columns):
             count = number
@@ -167,7 +169,7 @@
             result.append(column)
         return result
 
-    def get_h_columns(string, columns):
+    def get_h_columns(string, columns):#-------------------done
         result = []
         columns = len(string) // columns
         count = 0
@@ -176,7 +178,7 @@
             count += columns
         return result
 
-    def do_h_columnar(nKey):
+    def do_h_columnar(nKey):#---------------------------------TODO
         global text, TEXT
         TXT = process_remove(TEXT, strict)
         keyLen = len(nKey)
@@ -188,11 +190,11 @@
             for i in range(len(TXT)):
                 text += cols[nKey[i % keyLen]][i // keyLen]
 
-    def x22_x12_mat_mul(x22, x12):
+    def x22_x12_mat_mul(x22, x12):#-------------------------------TODO
         return [(x22[0][0] * x12[0] + x22[0][1] * x12[1]) % 26,
                 (x22[1][0] * x12[0] + x22[1][1] * x12[1]) % 26]
 
-    def do_hill_2x2():
+    def do_hill_2x2():#-------------------------------------------------TODO
         if encrypt:
             print("Sorry, that is not yet coded!")
         else:
@@ -203,29 +205,29 @@
                              for c in TEXT], 2)]]
             return "".join([alpha[x] for x in l])
 
-    def substitute(text, sourceAlpha, targetAlpha):
+    def substitute(text, sourceAlpha, targetAlpha):#---------done
         for i in range(len(sourceAlpha)):
             text = text.replace(sourceAlpha[i], targetAlpha[i])
         return text
 
-    def generate_caesar(shift, ALPHA = alphabet.upper()):
+    def generate_caesar(shift, ALPHA = alphabet.upper()):#------------done
         SHIFTED = ""
         for i in range(len(ALPHA)):
             SHIFTED += ALPHA[(i + shift) % len(ALPHA)]
         return SHIFTED
 
-    def set_caesar(shift):
+    def set_caesar(shift):#------------------------------done
         global ALPHA
         ALPHA = generate_caesar(shift)
 
-    def set_atbash(shift = 0):
+    def set_atbash(shift = 0):#---------------------------------done
         global ALPHA
         HOLDER = generate_caesar(shift)
         ALPHA = ""
         for i in range(len(HOLDER)):
             ALPHA += HOLDER[len(HOLDER) - (i + 1)]
 
-    def set_keyword_cipher(KEY = Key, ORIG = alphabet.upper()):
+    def set_keyword_cipher(KEY = Key, ORIG = alphabet.upper()):#-------------done
         global ALPHA
         KEY = KEY.upper()
         KEY = process_remove(KEY, strict)
@@ -237,19 +239,20 @@
             else:
                 i += 1
 
-    def set_mono_ALPHA():
+    def set_mono_ALPHA():#--------------------------------------probably not necessary
         global alpha, ALPHA
         print(alpha)
         ALPHA = input()
 
-    def do_mono_mono_sub():
+    def do_mono_mono_sub():#---------------------------------done
         global encrypt, text, alphabet, TEXT, ALPHABET
         if encrypt:
             TEXT = substitute(text, alpha, ALPHA)
         else:
             text = substitute(TEXT, ALPHA, alpha)
 
-    def keyw_mono_poly_sub(a, direction, keyword = Key):
+    def keyw_mono_poly_sub(a, direction, keyword = Key):#----------------done
+        #-------------------------------------ALso, this name is complete nonsense
         KEY = []
         keyword = process_remove(keyword, strict, True)
         for c in keyword:
@@ -272,14 +275,14 @@
                 b += a[i]
         return b
 
-    def do_vignere(keyword = Key):
+    def do_vignere(keyword = Key):#---------------------TODO
         global text, TEXT
         if encrypt:
             TEXT = keyw_mono_poly_sub(text, True, keyword)
         else:
             text = keyw_mono_poly_sub(TEXT, False, keyword)
 
-    def do_beaufort(keyword = Key):
+    def do_beaufort(keyword = Key):#-------------------------TODO
         global text, TEXT
         if encrypt:
             TEXT = keyw_mono_poly_sub(text, False, keyword).swapcase()
@@ -288,6 +291,7 @@
 
 
     #------End-user CLI Functions------#
+            #-----------------------------------------pretty much all TODO
 
     def hi():
         print("""
