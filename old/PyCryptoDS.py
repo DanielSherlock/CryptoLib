@@ -37,7 +37,7 @@
         else:
             canon_alpha = True
 
-    def process_remove(string, taboo = remove, key = False):#---------TODO
+    def process_remove(string, taboo = remove, key = False):#---------done
         for c in taboo:
             if not key or not c == key_empty_c:
                 string = string.replace(c, "")

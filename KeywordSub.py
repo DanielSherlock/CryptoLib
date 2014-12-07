@@ -16,14 +16,8 @@ class KeywordSub(SimpleSub):
         '''Return Type: Data
         Adds the keyword given to it to the front of the alphabet.
         '''
-        keyword = keyword.upper()
         alphabet = alphabet.upper()
-        i = 0
-        while i < len(keyword):
-            if not keyword[i] in alphabet:
-                keyword = keyword.replace(keyword[i], '')
-            else:
-                i += 1
+        keyword = self.only_char_in(alphabet, keyword.upper())
         result = keyword + alphabet
         i = 0
         while i < len(result):

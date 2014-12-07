@@ -25,10 +25,39 @@ class Text(object):
     # These functions use the filters to be helpful to other functions
 
     def ignore_in(self, string):
+        '''Return Type: Data
+        Checks to see if a certain string contains characters from 'ignore'
+        '''
         for x in self.ignore:
             if x in string:
                 return True
         return False
+    
+    def only_char_in(self, allowed, string):
+        '''Return Type: Data/Text
+        Returns text, in which all characters, except for those
+        in 'allowed', have been filtered out.
+        '''
+        i = 0
+        while i < len(string):
+            if not string[i] in allowed:
+                string = string.replace(string[i], '')
+            else:
+                i += 1
+        return string
+
+    def only_char_not_in(self, disallowed, string):
+        '''Return Type: Data/Text
+        Returns text, in which all characters which have been
+        specified in 'disallowed', have been filtered out.
+        '''
+        i = 0
+        while i < len(string):
+            if string[i] in disallowed:
+                string = string.replace(string[i], '')
+            else:
+                i += 1
+        return string
 
 
 
