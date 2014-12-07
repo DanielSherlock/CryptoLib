@@ -30,7 +30,7 @@
         else:
             encrypt = True
 
-    def set_canon_alpha(canon):#----------------------------------probably not necessary
+    def set_canon_alpha(canon):#----------------------------------not necessary
         global canon_alpha
         if canon == "ALPHA" or canon.lower() == "decrypt" or not canon:
             canon_alpha = False
@@ -43,12 +43,12 @@
                 string = string.replace(c, "")
         return string
 
-    def set_text(new):#----------------------------------------probably not necessary
+    def set_text(new):#----------------------------------------not necessary
         global text
         text = new.lower()
         text = process_remove(text)
 
-    def set_TEXT(NEW):#------------------------------------------probably not necessary
+    def set_TEXT(NEW):#------------------------------------------not necessary
         global TEXT
         TEXT = NEW.upper()
         TEXT = process_remove(TEXT)
@@ -62,7 +62,7 @@
                 return True
         return False
 
-    def sort_by_canon():#-------------------------------------------TODO
+    def sort_by_canon():#-------------------------------------------done
         global alpha, ALPHA, canon_alpha
         if canon_alpha:
             a = 0
