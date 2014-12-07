@@ -4,7 +4,6 @@ from Grid import Grid
 
 default_ignore = " ,.!-_'?/><~][;:="
 default_remove = ""
-default_strict = " ,.!-_'?/><~][;:="
 
 
 
@@ -13,25 +12,12 @@ class Text(object):
     '''
     def __init__(self, text = '', key = '',
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
+                 remove = default_remove):
         self.text = text
         self.key = key
 
         self.ignore = ignore
         self.remove = remove
-        self.strict = strict
-
-    def copy(self):
-        '''Return Type: Text
-        Create a new instance of Text,
-        with the same data as this instance.
-        '''
-        return Text(self.text,
-                    self.key,
-                    self.ignore,
-                    self.remove,
-                    self.strict)
 
 
 

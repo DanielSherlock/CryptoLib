@@ -2,10 +2,10 @@
 from SimpleSub import (SimpleSub,
                        simplesub,
                        SIMPLESUB,
+
                        default_alphabet,
                        default_ignore,
-                       default_remove,
-                       default_strict)
+                       default_remove)
 
 
 
@@ -30,10 +30,10 @@ class atbash(simplesub, Atbash):
     def __init__(self, plaintext = '', key = False,
                  alphabet = default_alphabet.lower(),
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
-        super(atbash, self).__init__(plaintext, key, alphabet, alphabet,
-                                     ignore, remove, strict)
+                 remove = default_remove):
+        super(atbash, self).__init__(plaintext, key,
+                                     alphabet, alphabet,
+                                     ignore, remove,)
 
     def update_alphabets(self):
         '''Return Type: MUTATES/None
@@ -51,10 +51,10 @@ class ATBASH(SIMPLESUB, Atbash):
     def __init__(self, ciphertext = '', key = False,
                  alphabet = default_alphabet.lower(),
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
-        super(ATBASH, self).__init__(ciphertext, key, alphabet, alphabet,
-                                     ignore, remove, strict)
+                 remove = default_remove):
+        super(ATBASH, self).__init__(ciphertext, key,
+                                     alphabet, alphabet,
+                                     ignore, remove)
 
     def update_alphabets(self):
         '''Return Type: MUTATES/None

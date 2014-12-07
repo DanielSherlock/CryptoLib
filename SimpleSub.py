@@ -2,8 +2,7 @@
 from Substitution import (Substitution,
                           default_alphabet,
                           default_ignore,
-                          default_remove,
-                          default_strict)
+                          default_remove)
 
 
 
@@ -25,11 +24,10 @@ class simplesub(SimpleSub):
                  plain_alphabet = default_alphabet.lower(),
                  cipher_alphabet = default_alphabet.upper(),
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
+                 remove = default_remove):
         super(simplesub, self).__init__(plaintext.lower(), key,
                                         plain_alphabet.lower(),
-                                        ignore, remove, strict)
+                                        ignore, remove)
         self.cipher_alphabet = cipher_alphabet.upper()
         self.update_alphabets()
 
@@ -51,8 +49,7 @@ class simplesub(SimpleSub):
                          self.alphabet,
                          self.cipher_alphabet,
                          self.ignore,
-                         self.remove,
-                         self.strict)
+                         self.remove)
 
 
         
@@ -64,11 +61,10 @@ class SIMPLESUB(SimpleSub):
                  plain_alphabet = default_alphabet.lower(),
                  cipher_alphabet = default_alphabet.upper(),
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
+                 remove = default_remove):
         super(SIMPLESUB, self).__init__(ciphertext.upper(), key,
                                         cipher_alphabet.upper(),
-                                        ignore, remove, strict)
+                                        ignore, remove)
         self.plain_alphabet = plain_alphabet.lower()
         self.update_alphabets()
 
@@ -90,5 +86,4 @@ class SIMPLESUB(SimpleSub):
                          self.plain_alphabet,
                          self.alphabet,
                          self.ignore,
-                         self.remove,
-                         self.strict)
+                         self.remove)

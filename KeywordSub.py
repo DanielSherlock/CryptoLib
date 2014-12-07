@@ -4,8 +4,7 @@ from SimpleSub import (SimpleSub,
                        SIMPLESUB,
                        default_alphabet,
                        default_ignore,
-                       default_remove,
-                       default_strict)
+                       default_remove)
 
 
 
@@ -34,10 +33,10 @@ class keywordsub(simplesub, KeywordSub):
     def __init__(self, plaintext = '', key = '',
                  alphabet = default_alphabet.lower(),
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
-        super(keywordsub, self).__init__(plaintext, key, alphabet, alphabet,
-                                         ignore, remove, strict)
+                 remove = default_remove):
+        super(keywordsub, self).__init__(plaintext, key,
+                                         alphabet, alphabet,
+                                         ignore, remove)
 
     def update_alphabets(self):
         '''Return Type: MUTATES/None
@@ -55,10 +54,10 @@ class KEYWORDSUB(SIMPLESUB, KeywordSub):
     def __init__(self, ciphertext = '', key = '',
                  alphabet = default_alphabet.upper(),
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
-        super(KEYWORDSUB, self).__init__(ciphertext, key, alphabet, alphabet,
-                                         ignore, remove, strict)
+                 remove = default_remove):
+        super(KEYWORDSUB, self).__init__(ciphertext, key,
+                                         alphabet, alphabet,
+                                         ignore, remove)
 
     def update_alphabets(self):
         '''Return Type: MUTATES/None

@@ -2,8 +2,7 @@
 import copy
 from Text import (Text,
                   default_ignore,
-                  default_remove,
-                  default_strict)
+                  default_remove)
 
 default_alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -16,10 +15,9 @@ class Substitution(Text):
     def __init__(self, text = '', key = '',
                  alphabet = default_alphabet,
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
-        super(Substitution, self).__init__(text, key, ignore,
-                                           remove, strict)
+                 remove = default_remove):
+        super(Substitution, self).__init__(text, key,
+                                           ignore, remove)
         self.alphabet = alphabet
 
     def substitute(self, new_alphabet):

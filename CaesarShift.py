@@ -2,10 +2,10 @@
 from SimpleSub import (SimpleSub,
                        simplesub,
                        SIMPLESUB,
+                       
                        default_alphabet,
                        default_ignore,
-                       default_remove,
-                       default_strict)
+                       default_remove)
 
 
 
@@ -31,10 +31,10 @@ class caesarshift(simplesub, Caesar):
     def __init__(self, plaintext = '', key = 0,
                  alphabet = default_alphabet.lower(),
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
-        super(caesarshift, self).__init__(plaintext, key, alphabet, alphabet,
-                                          ignore, remove, strict)
+                 remove = default_remove):
+        super(caesarshift, self).__init__(plaintext, key,
+                                          alphabet, alphabet,
+                                          ignore, remove)
 
     def update_alphabets(self):
         '''Return Type: MUTATES/None
@@ -52,10 +52,10 @@ class CAESARSHIFT(SIMPLESUB, Caesar):
     def __init__(self, ciphertext = '', key = 0,
                  alphabet = default_alphabet.upper(),
                  ignore = default_ignore,
-                 remove = default_remove,
-                 strict = default_strict):
-        super(CAESARSHIFT, self).__init__(ciphertext, key, alphabet, alphabet,
-                                          ignore, remove, strict)
+                 remove = default_remove):
+        super(CAESARSHIFT, self).__init__(ciphertext, key,
+                                          alphabet, alphabet,
+                                          ignore, remove)
 
     def update_alphabets(self):
         '''Return Type: MUTATES/None
