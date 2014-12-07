@@ -9,32 +9,31 @@ from SimpleSub import (SimpleSub,
 
 
 
-class Caesar(SimpleSub):
-    '''Generic, Caesar-shift-cipher-related, piece of text
+class Atbash(SimpleSub):
+    '''Generic, Atbash-cipher-related, piece of text
     '''
-    
-    def shift_alphabet(self, alphabet, shift):
+
+    def reverse_alphabet(self, alphabet):
         '''Return Type: Data
-        Shifts an alphabet by a certain amount.
-        Negative Shifts work too.
+        Returns own alphabet, reversed.
         '''
         result = ""
         for i in range(len(alphabet)):
-            result += alphabet[(i + shift) % len(alphabet)]
+            result += alphabet[- (i + 1)]
         return result
 
 
 
-class caesarshift(simplesub, Caesar):
-    '''A piece of text that will become a caesar shift cipher.
+class atbash(simplesub, Atbash):
+    '''A piece of text that will become an atbash cipher.
     '''
-    def __init__(self, plaintext = '', key = 0,
+    def __init__(self, plaintext = '', key = False,
                  alphabet = default_alphabet.lower(),
                  ignore = default_ignore,
                  remove = default_remove,
                  strict = default_strict):
-        super(caesarshift, self).__init__(plaintext, key, alphabet, alphabet,
-                                          ignore, remove, strict)
+        super(atbash, self).__init__(plaintext, key, alphabet, alphabet,
+                                     ignore, remove, strict)
 
     def update_alphabets(self):
         '''Return Type: MUTATES/None
@@ -42,20 +41,20 @@ class caesarshift(simplesub, Caesar):
         Also ensures that crypto-convention is followed.
         '''
         self.alphabet = self.alphabet.lower()
-        self.cipher_alphabet = self.shift_alphabet(self.alphabet, self.key).upper()
+        self.cipher_alphabet = self.reverse_alphabet(self.alphabet).upper()
 
 
         
-class CAESARSHIFT(SIMPLESUB, Caesar):
-    '''A piece of text that is an encrypted caesar shift cipher.
+class ATBASH(SIMPLESUB, Atbash):
+    '''A piece of text that is an encrypted atbash cipher.
     '''
-    def __init__(self, ciphertext = '', key = 0,
-                 alphabet = default_alphabet.upper(),
+    def __init__(self, ciphertext = '', key = False,
+                 alphabet = default_alphabet.lower(),
                  ignore = default_ignore,
                  remove = default_remove,
                  strict = default_strict):
-        super(CAESARSHIFT, self).__init__(ciphertext, key, alphabet, alphabet,
-                                          ignore, remove, strict)
+        super(ATBASH, self).__init__(ciphertext, key, alphabet, alphabet,
+                                     ignore, remove, strict)
 
     def update_alphabets(self):
         '''Return Type: MUTATES/None
@@ -63,5 +62,5 @@ class CAESARSHIFT(SIMPLESUB, Caesar):
         Also ensures that crypto-convention is followed.
         '''
         self.plain_alphabet = self.plain_alphabet.lower()
-        self.alphabet = self.shift_alphabet(self.plain_alphabet, self.key).upper()
+        self.alphabet = self.reverse_alphabet(self.plain_alphabet).upper()
 
