@@ -11,8 +11,23 @@ class SimpleSub(Substitution):
     simple (monoalphabetic, monographic) substitution cipher.
     '''
 
-    def sort_alphabet(self):
-        pass
+    def sort_alphabets(self, alphabet1, alphabet2):
+        '''Return Type: Data
+        Sorts both alphabets together,
+        such that alphabet1 is put into order.
+        Used to reveal hard-to-spot patterns.
+        '''
+        holder = []
+        length = min(len(alphabet1), len(alphabet2))
+        for i in range(length):
+            holder.append([alphabet1[i], alphabet2[i]])
+        holder.sort(key=lambda seq: seq[0])
+        alphabet1 = ""
+        alphabet2 = ""
+        for i in range(length):
+            alphabet1 += holder[i][0]
+            alphabet2 += holder[i][1]
+        return [alphabet1, alphabet2]
 
 
 
