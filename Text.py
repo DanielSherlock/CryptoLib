@@ -2,7 +2,7 @@
 import math
 from Grid import Grid
 
-default_ignore = " ,.!-_'?/><~][;:="
+default_ignore = " ,.!-_'?/\\\"\n><~][;:="
 default_remove = ""
 
 
@@ -13,11 +13,11 @@ class Text(object):
     def __init__(self, text = '', key = '',
                  ignore = default_ignore,
                  remove = default_remove):
-        self.text = text
-        self.key = key
-
         self.ignore = ignore
         self.remove = remove
+
+        self.text = self.do_remove(text)
+        self.key = key
 
 
 
@@ -58,6 +58,13 @@ class Text(object):
             else:
                 i += 1
         return string
+
+    def do_remove(self, string):
+        '''Return Type: Data/Text
+        Returns text, in which all characters which have been
+        specified in 'remove', have been filtered out.
+        '''
+        return self.only_char_not_in(self.remove, string)
 
 
 

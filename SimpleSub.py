@@ -28,7 +28,7 @@ class simplesub(SimpleSub):
         super(simplesub, self).__init__(plaintext.lower(), key,
                                         plain_alphabet.lower(),
                                         ignore, remove)
-        self.cipher_alphabet = cipher_alphabet.upper()
+        self.cipher_alphabet = self.do_remove(cipher_alphabet.upper())
         self.update_alphabets()
 
     def update_alphabets(self):
@@ -36,8 +36,8 @@ class simplesub(SimpleSub):
         Updates the alphabets, according to the key.
         Also ensures that crypto-convention is followed.
         '''
-        self.alphabet = self.alphabet.lower()
-        self.cipher_alphabet = self.cipher_alphabet.upper()
+        self.alphabet = self.do_remove(self.alphabet.lower())
+        self.cipher_alphabet = self.do_remove(self.cipher_alphabet.upper())
 
     def encrypt(self):
         '''Return Type: Text
@@ -65,7 +65,7 @@ class SIMPLESUB(SimpleSub):
         super(SIMPLESUB, self).__init__(ciphertext.upper(), key,
                                         cipher_alphabet.upper(),
                                         ignore, remove)
-        self.plain_alphabet = plain_alphabet.lower()
+        self.plain_alphabet = self.do_remove(plain_alphabet.lower())
         self.update_alphabets()
 
     def update_alphabets(self):
@@ -73,8 +73,8 @@ class SIMPLESUB(SimpleSub):
         Updates the alphabets, according to the key.
         Also ensures that crypto-convention is followed.
         '''
-        self.plain_alphabet = self.plain_alphabet.lower()
-        self.alphabet = self.alphabet.upper()
+        self.plain_alphabet = self.do_remove(self.plain_alphabet.lower())
+        self.alphabet = self.do_remove(self.alphabet.upper())
 
     def decrypt(self):
         '''Return Type: Text

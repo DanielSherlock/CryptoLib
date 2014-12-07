@@ -41,7 +41,7 @@ class caesarshift(simplesub, Caesar):
         Updates the alphabets, according to the key.
         Also ensures that crypto-convention is followed.
         '''
-        self.alphabet = self.alphabet.lower()
+        self.alphabet = self.do_remove(self.alphabet.lower())
         self.cipher_alphabet = self.shift_alphabet(self.alphabet, self.key).upper()
 
 
@@ -62,6 +62,6 @@ class CAESARSHIFT(SIMPLESUB, Caesar):
         Updates the alphabets, according to the key.
         Also ensures that crypto-convention is followed.
         '''
-        self.plain_alphabet = self.plain_alphabet.lower()
+        self.plain_alphabet = self.do_remove(self.plain_alphabet.lower())
         self.alphabet = self.shift_alphabet(self.plain_alphabet, self.key).upper()
 
